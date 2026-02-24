@@ -1,9 +1,12 @@
-﻿namespace ComandasLanchonete.Models
+﻿using ComandasLanchonete.Models.BaseModels;
+
+namespace ComandasLanchonete.Models
 {
-    public class Produto
+    public class Produto : ProdutoBaseModel
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public float Preco { get; set; }
+        public Produto(ProdutoBaseModel produtoBaseModel):base(produtoBaseModel)
+        {
+            
+        }
     }
 }

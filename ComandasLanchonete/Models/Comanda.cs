@@ -1,10 +1,13 @@
-﻿namespace ComandasLanchonete.Models
+﻿using ComandasLanchonete.DAL.Models;
+using ComandasLanchonete.Models.BaseModels;
+
+namespace ComandasLanchonete.Models
 {
-    public class Comanda
+    public class Comanda : ComandaBaseModel
     {
-        public int IdCliente { get; set; }
-        public string NomeCliente { get; set; }
-        public string TelefoneCliente { get; set; }
         public List<Produto> Produtos { get; set; }
+
+        public Comanda(){}
+        public Comanda(ComandaBaseModel comandaBaseModel):base(comandaBaseModel){}
     }
 }

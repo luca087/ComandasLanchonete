@@ -1,4 +1,5 @@
 ﻿using ComandasLanchonete.Models;
+using ComandasLanchonete.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ComandasLanchonete.Controllers
@@ -7,10 +8,24 @@ namespace ComandasLanchonete.Controllers
     [Route("comandas")]
     public class ComandasController : ControllerBase
     {
+        private readonly ComandasService _comandasService;
+
+        public ComandasController(ComandasService comandasService)
+        {
+            _comandasService = comandasService;
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<Comanda>> GetComandas()
         {
-            return Ok(new List<Comanda>());
+            try
+            {
+                return Ok(_comandasService.GetComandas());
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("{id}")]
@@ -22,19 +37,42 @@ namespace ComandasLanchonete.Controllers
         [HttpPost]
         public ActionResult<Comanda> CreateComanda([FromBody] Comanda newComanda)
         {
-            return Ok(newComanda);
+            try
+            {
+                return Ok(_comandasService.CreateComanda(newComanda));
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("{id}")]
         public ActionResult UpdateComanda(int id, [FromBody] Comanda comanda)
         {
-            return Ok(comanda);
+            try
+            {
+                _comandasService.UpdateComanda(new Comanda(comanda){Id = id});
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete("{id}")]
         public ActionResult DeleteComanda(int id)
         {
-            return Ok("");
+            try
+            {
+                _comandasService.DeleteComanda(id);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }
