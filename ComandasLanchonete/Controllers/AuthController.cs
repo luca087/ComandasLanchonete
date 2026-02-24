@@ -1,4 +1,5 @@
 ﻿using ComandasLanchonete.Models;
+using ComandasLanchonete.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ComandasLanchonete.Controllers
@@ -7,16 +8,38 @@ namespace ComandasLanchonete.Controllers
     [Route("auth")]
     public class AuthController : ControllerBase
     {
+        private readonly AuthService _authService;
+
+        public AuthController(AuthService authService)
+        {
+            _authService = authService;
+        }
+
         [HttpPost("login")]
         public ActionResult<AuthResult> Login([FromBody]LoginModel loginModel)
         {
-            return Ok(new AuthResult());
+            try
+            {
+                return Ok(_authService.Login(loginModel));
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost("logout")]
         public ActionResult Logout()
         {
-            return Ok();
+            try
+            {
+                _authService.Logout();
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }
