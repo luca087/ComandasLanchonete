@@ -7,7 +7,7 @@ namespace ComandasLanchonete.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("comandas")]
+    [Route("FurbWeb/v1/comandas")]
     public class ComandasController : ControllerBase
     {
         private readonly ComandasService _comandasService;
@@ -24,7 +24,7 @@ namespace ComandasLanchonete.Controllers
             {
                 return Ok(_comandasService.GetComandas());
             }
-            catch(Exception  ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -35,7 +35,12 @@ namespace ComandasLanchonete.Controllers
         {
             try
             {
-                return Ok(_comandasService.GetComandaById(id));
+                var comanda = _comandasService.GetComandaById(id);
+                if (comanda != null)
+                {
+                    return Ok(comanda);
+                }
+                return NotFound();
             }
             catch (Exception ex)
             {
@@ -50,7 +55,7 @@ namespace ComandasLanchonete.Controllers
             {
                 return Ok(_comandasService.CreateComanda(newComanda));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -65,7 +70,7 @@ namespace ComandasLanchonete.Controllers
                 _comandasService.UpdateComanda(comanda);
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -79,7 +84,7 @@ namespace ComandasLanchonete.Controllers
                 _comandasService.DeleteComanda(id);
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

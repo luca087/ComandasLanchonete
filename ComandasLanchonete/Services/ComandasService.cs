@@ -16,6 +16,7 @@ namespace ComandasLanchonete.Services
         }
         public ComandaModel CreateComanda(ComandaModel comanda)
         {
+            comanda.Validate();
             var model = new ComandaDALModel(comanda);
             model.Produtos = comanda.Produtos.Select(x => new ProdutoDALModel(x)
             {
@@ -45,11 +46,12 @@ namespace ComandasLanchonete.Services
                 var produtos = _produtosDAL.GetProdutos().Where(x => x.ComandaId == id).Select(x => new ProdutoModel(x)).ToList();
                 return new ComandaModel(comanda) { Produtos = produtos };
             }
-            throw new Exception("Comanda não encontrada");
+            return null;
         }
 
         public void UpdateComanda(ComandaModel comanda)
         {
+            comanda.Validate();
             var model = new ComandaDALModel(comanda);
             model.Produtos = comanda.Produtos.Select(x => new ProdutoDALModel(x)
             {

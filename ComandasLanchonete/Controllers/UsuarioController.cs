@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ComandasLanchonete.Controllers
 {
     [ApiController]
-    [Route("usuario")]
+    [Route("FurbWeb/v1/usuarios")]
     public class UsuarioController : ControllerBase
     {
         private readonly UsuariosService _usuariosService;
@@ -23,9 +23,9 @@ namespace ComandasLanchonete.Controllers
                 _usuariosService.CreateUsuario(userModel);
                 return Ok();
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest();  
+                return BadRequest(ex.Message);  
             }
         }
     }

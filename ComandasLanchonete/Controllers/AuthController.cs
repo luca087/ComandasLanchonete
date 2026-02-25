@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ComandasLanchonete.Controllers
 {
     [ApiController]
-    [Route("auth")]
+    [Route("FurbWeb/v1/auth")]
     public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;
