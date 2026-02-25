@@ -31,7 +31,7 @@ namespace ComandasLanchonete.Services
         public IEnumerable<Comanda> GetComandas()
         {
             var produtos = _produtosDAL.GetProdutos();
-            return _comandasDAL.GetComandas().Select(x=> new Comanda(x){Produtos = produtos.Where(x=>x.ComandaId == x.Id).ToList()}).ToList();
+            return _comandasDAL.GetComandas().Select(x=> new Comanda(x){Produtos = produtos.Where(x=>x.ComandaId == x.Id).Select(x=>new Produto(x)).ToList()}).ToList();
         }
 
         public void UpdateComanda(Comanda comanda)

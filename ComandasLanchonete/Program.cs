@@ -1,3 +1,6 @@
+using ComandasLanchonete.DAL;
+using ComandasLanchonete.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<ComandasDAL>();
+builder.Services.AddSingleton<ProdutosDAL>();
+builder.Services.AddSingleton<ComandasService>();
 
 var app = builder.Build();
 

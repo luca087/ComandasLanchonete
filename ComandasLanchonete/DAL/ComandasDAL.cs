@@ -7,7 +7,7 @@ namespace ComandasLanchonete.DAL
     {
         public ComandaDALModel CreateComanda(ComandaDALModel comanda)
         {
-            return new Comanda();
+            return new ComandaDALModel();
         } 
 
         public IEnumerable<ComandaDALModel> GetComandas()

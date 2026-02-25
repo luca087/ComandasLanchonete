@@ -6,7 +6,7 @@ namespace ComandasLanchonete.DAL
     {
         public ProdutoDALModel CreateProduto(ProdutoDALModel produto)
         {
-            return new Produto();
+            return new ProdutoDALModel();
         } 
 
         public IEnumerable<ProdutoDALModel> GetProdutos()
