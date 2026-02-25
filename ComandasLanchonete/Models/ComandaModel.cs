@@ -5,7 +5,7 @@ namespace ComandasLanchonete.Models
 {
     public class ComandaModel : ComandaBaseModel
     {
-        public List<ProdutoModel> Produtos { get; set; }
+        public List<ProdutoModel> Produtos { get; set; } = new List<ProdutoModel>();
 
         public ComandaModel(){}
         public ComandaModel(ComandaBaseModel comandaBaseModel):base(comandaBaseModel){}

@@ -1,7 +1,6 @@
 ﻿using ComandasLanchonete.DAL;
 using ComandasLanchonete.DAL.Models;
 using ComandasLanchonete.Models;
-using System.Linq;
 
 namespace ComandasLanchonete.Services
 {
@@ -22,22 +21,42 @@ namespace ComandasLanchonete.Services
             {
                 ComandaId = comanda.Id,
                 Comanda = model
-                }).ToList();
-            _comandasDAL.CreateComanda(model);
+            }).ToList();
+            var result = _comandasDAL.CreateComanda(model);
+            comanda.Id = result.Id;
             return comanda;
         }
 
         public IEnumerable<ComandaModel> GetComandas()
         {
-            var produtos = _produtosDAL.GetProdutos();
-            return _comandasDAL.GetComandas().Select(x=> new ComandaModel(x){Produtos = produtos.Where(x=>x.ComandaId == x.Id).Select(x=>new ProdutoModel(x)).ToList()}).ToList();
+            return _comandasDAL.GetComandas().Select(comanda =>
+            new ComandaModel(comanda)
+            {
+                Produtos = _produtosDAL.GetProdutos().Where(x => x.ComandaId == comanda.Id).Select(x =>
+            new ProdutoModel(x)).ToList()
+            }).ToList();
+        }
+
+        public ComandaModel GetComandaById(int id)
+        {
+            var comanda = _comandasDAL.GetComandaById(id);
+            if (comanda != null)
+            {
+                var produtos = _produtosDAL.GetProdutos().Where(x => x.ComandaId == id).Select(x => new ProdutoModel(x)).ToList();
+                return new ComandaModel(comanda) { Produtos = produtos };
+            }
+            throw new Exception("Comanda não encontrada");
         }
 
         public void UpdateComanda(ComandaModel comanda)
         {
-            _comandasDAL.UpdateComanda(new ComandaDALModel(comanda));
-            //update produtos
-
+            var model = new ComandaDALModel(comanda);
+            model.Produtos = comanda.Produtos.Select(x => new ProdutoDALModel(x)
+            {
+                ComandaId = comanda.Id,
+                Comanda = model
+            }).ToList();
+            _comandasDAL.UpdateComanda(model);
         }
 
         public void DeleteComanda(int id)

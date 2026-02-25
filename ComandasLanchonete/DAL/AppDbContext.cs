@@ -7,6 +7,7 @@ namespace ComandasLanchonete.DAL
     {
         public DbSet<ComandaDALModel> Comandas {  get; set; }
         public DbSet<ProdutoDALModel> Produtos {  get; set; }
+        public DbSet<UserDALModel> Usuarios {  get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
@@ -35,6 +36,15 @@ namespace ComandasLanchonete.DAL
                 entity.HasKey(x=>x.Id);
                 entity.Property(x => x.Id)
                 .ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<UserDALModel>(entity =>
+            {
+                entity.HasKey(x => x.Id); 
+                entity.Property(x => x.Id).ValueGeneratedOnAdd();
+
+                entity.HasIndex(x=>x.Login)
+                .IsUnique();
             });
         }
     }

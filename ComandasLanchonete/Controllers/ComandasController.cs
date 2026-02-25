@@ -1,9 +1,11 @@
 ﻿using ComandasLanchonete.Models;
 using ComandasLanchonete.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ComandasLanchonete.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("comandas")]
     public class ComandasController : ControllerBase
@@ -22,16 +24,23 @@ namespace ComandasLanchonete.Controllers
             {
                 return Ok(_comandasService.GetComandas());
             }
-            catch
+            catch(Exception  ex) 
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpGet("{id}")]
         public ActionResult<ComandaModel> GetComanda(int id)
         {
-            return Ok(new ComandaModel());
+            try
+            {
+                return Ok(_comandasService.GetComandaById(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -41,9 +50,9 @@ namespace ComandasLanchonete.Controllers
             {
                 return Ok(_comandasService.CreateComanda(newComanda));
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -52,12 +61,13 @@ namespace ComandasLanchonete.Controllers
         {
             try
             {
-                _comandasService.UpdateComanda(new ComandaModel(comanda){Id = id});
+                comanda.Id = id;
+                _comandasService.UpdateComanda(comanda);
                 return Ok();
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -69,9 +79,9 @@ namespace ComandasLanchonete.Controllers
                 _comandasService.DeleteComanda(id);
                 return Ok();
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
     }

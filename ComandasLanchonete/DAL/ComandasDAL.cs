@@ -13,9 +13,9 @@ namespace ComandasLanchonete.DAL
 
         public ComandaDALModel CreateComanda(ComandaDALModel comanda)
         {
-            _context.Comandas.Add(comanda);
+            var entity = _context.Comandas.Add(comanda);
             _context.SaveChanges();
-            return comanda;
+            return entity.Entity;
         }
 
         public IEnumerable<ComandaDALModel> GetComandas()

@@ -9,6 +9,7 @@ namespace ComandasLanchonete.Models.BaseModels
         public ComandaBaseModel(){}
         public ComandaBaseModel(ComandaBaseModel comandaBaseModel)
         {
+            Id = comandaBaseModel.Id;
             IdCliente = comandaBaseModel.IdCliente;
             NomeCliente = comandaBaseModel.NomeCliente;
             TelefoneCliente = comandaBaseModel.TelefoneCliente;

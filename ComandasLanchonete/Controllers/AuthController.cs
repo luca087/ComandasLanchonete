@@ -22,9 +22,9 @@ namespace ComandasLanchonete.Controllers
             {
                 return Ok(_authService.Login(loginModel));
             }
-            catch
+            catch(Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
 
@@ -36,9 +36,9 @@ namespace ComandasLanchonete.Controllers
                 _authService.Logout();
                 return Ok();
             }
-            catch
+            catch(Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
     }
