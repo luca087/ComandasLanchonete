@@ -15,26 +15,25 @@ namespace ComandasLanchonete.Services
             _comandasDAL = comandasDAL;
             _produtosDAL = produtosDAL;
         }
-        public Comanda CreateComanda(Comanda comanda)
+        public ComandaModel CreateComanda(ComandaModel comanda)
         {
-            _comandasDAL.CreateComanda(new ComandaDALModel(comanda));
-            foreach (var produto in comanda.Produtos)
+            var model = new ComandaDALModel(comanda);
+            model.Produtos = comanda.Produtos.Select(x => new ProdutoDALModel(x)
             {
-                _produtosDAL.CreateProduto(new ProdutoDALModel(produto)
-                {
-                    ComandaId = comanda.Id
-                });
-            }
+                ComandaId = comanda.Id,
+                Comanda = model
+                }).ToList();
+            _comandasDAL.CreateComanda(model);
             return comanda;
         }
 
-        public IEnumerable<Comanda> GetComandas()
+        public IEnumerable<ComandaModel> GetComandas()
         {
             var produtos = _produtosDAL.GetProdutos();
-            return _comandasDAL.GetComandas().Select(x=> new Comanda(x){Produtos = produtos.Where(x=>x.ComandaId == x.Id).Select(x=>new Produto(x)).ToList()}).ToList();
+            return _comandasDAL.GetComandas().Select(x=> new ComandaModel(x){Produtos = produtos.Where(x=>x.ComandaId == x.Id).Select(x=>new ProdutoModel(x)).ToList()}).ToList();
         }
 
-        public void UpdateComanda(Comanda comanda)
+        public void UpdateComanda(ComandaModel comanda)
         {
             _comandasDAL.UpdateComanda(new ComandaDALModel(comanda));
             //update produtos

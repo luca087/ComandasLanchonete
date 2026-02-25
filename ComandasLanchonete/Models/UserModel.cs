@@ -2,13 +2,13 @@
 
 namespace ComandasLanchonete.Models
 {
-    public class User : UserBaseModel
+    public class UserModel : UserBaseModel
     {
-        public User()
+        public UserModel()
         {
             
         }
-        public User(UserBaseModel userBaseModel):base(userBaseModel)
+        public UserModel(UserBaseModel userBaseModel):base(userBaseModel)
         {
             
         }

@@ -4,7 +4,8 @@ namespace ComandasLanchonete.DAL.Models
 {
     public class ComandaDALModel : ComandaBaseModel
     {
-        public ComandaDALModel(){}
-        public ComandaDALModel(ComandaBaseModel comandaBaseModel):base(comandaBaseModel){}
+        public ICollection<ProdutoDALModel> Produtos { get; set; }
+        public ComandaDALModel() { }
+        public ComandaDALModel(ComandaBaseModel comandaBaseModel) : base(comandaBaseModel) { }
     }
 }

@@ -16,7 +16,7 @@ namespace ComandasLanchonete.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Comanda>> GetComandas()
+        public ActionResult<IEnumerable<ComandaModel>> GetComandas()
         {
             try
             {
@@ -29,13 +29,13 @@ namespace ComandasLanchonete.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Comanda> GetComanda(int id)
+        public ActionResult<ComandaModel> GetComanda(int id)
         {
-            return Ok(new Comanda());
+            return Ok(new ComandaModel());
         }
 
         [HttpPost]
-        public ActionResult<Comanda> CreateComanda([FromBody] Comanda newComanda)
+        public ActionResult<ComandaModel> CreateComanda([FromBody] ComandaModel newComanda)
         {
             try
             {
@@ -48,11 +48,11 @@ namespace ComandasLanchonete.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateComanda(int id, [FromBody] Comanda comanda)
+        public ActionResult UpdateComanda(int id, [FromBody] ComandaModel comanda)
         {
             try
             {
-                _comandasService.UpdateComanda(new Comanda(comanda){Id = id});
+                _comandasService.UpdateComanda(new ComandaModel(comanda){Id = id});
                 return Ok();
             }
             catch
